@@ -15,8 +15,8 @@ cashflow_mes_piso = 100
 
 ## Variables simuladas
 cap_mes = 500
-num_pisos = 5
-anios_sim = 50
+num_pisos = 3
+anios_sim = 30
 anios_pasados = 0
 meses_sim = anios_sim * 12
 meses_pasados = 12 * anios_pasados
@@ -73,9 +73,9 @@ plt.show()
 fig, ax = plt.subplots()
 years = np.arange(0, anios_sim + 1 - anios_pasados, 5)
 years_starts = [y * 12 + meses_pasados for y in years]
-line = ax.step(range(meses_sim + 1)[meses_pasados:], valores[meses_pasados:], '--', label='valor')
-line = ax.step(range(meses_sim + 1)[meses_pasados:], deudas[meses_pasados:], '--', label='deuda')
-line = ax.step(range(meses_sim + 1)[meses_pasados:], capitales[meses_pasados:], '--', label='patrimonio')
+line = ax.plot(range(meses_sim + 1)[meses_pasados:], valores[meses_pasados:], '--', label='valor')
+line = ax.plot(range(meses_sim + 1)[meses_pasados:], deudas[meses_pasados:], '--', label='deuda')
+line = ax.plot(range(meses_sim + 1)[meses_pasados:], capitales[meses_pasados:], '-', label='patrimonio')
 ax.set_title('Patrimonio (€) por años')
 ax.legend()
 ax.set_xticks(years_starts)

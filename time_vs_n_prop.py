@@ -30,13 +30,16 @@ for i in range(num_pisos):
 anios = [round(m / 12, 1) for m in meses]
 
 ## Cálculo de valor, deuda y patrimonio acumulado
-valor, valores, deuda, deudas, num_pisos = 0, [], 0, [], 0
+valor, valores, deuda, deudas, num_pisos_cum = 0, [], 0, [], 0
 for mes in range(meses[0], meses_sim + 1):
     if mes in np.cumsum(meses):
         valor += valor_piso
         deuda += deuda_piso
-        num_pisos += 1
-    deuda -= cuota_piso * num_pisos
+        num_pisos_cum += 1
+    if num_pisos_cum < num_pisos:
+        deuda -= cuota_piso * num_pisos_cum
+    else:
+        deuda -= cuota_piso * num_pisos + cap_mes
     valores.append(valor)
     deudas.append(deuda)
 
@@ -70,5 +73,6 @@ ax.set_title('Patrimonio (€) por años')
 ax.legend()
 ax.set_xticks(years_starts)
 ax.set_xticklabels(years)
+ax.margins(y=0.1)
 fig.tight_layout()
 plt.show()

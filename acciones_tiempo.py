@@ -44,8 +44,8 @@ class renta_variable:
     def simular(self, verbose=True, plot=True):
         self.calcular()
         if verbose:
-            print('Total invertido: {}€'.format(int(self.invertido)))
-            print('Total acumulado: {}€'.format(round(self.acumulado)))
+            print('Total invertido a los {} años: {}€'.format(self.anios_sim, int(self.invertido)))
+            print('Total acumulado a los {} años: {}€'.format(self.anios_sim, round(self.acumulado)))
         if plot:
             self.representar()
 

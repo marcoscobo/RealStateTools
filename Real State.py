@@ -1,6 +1,6 @@
 from utils.simular_patrimonio import simular_patrimonio
 
-anios_sim = 30
+anios_sim = 35
 num_pisos = 5
 interes_anual = 0.05
 cap_mes_inmuebles = 500

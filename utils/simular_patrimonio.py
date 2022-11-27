@@ -67,6 +67,8 @@ def simular_patrimonio(anios_sim, num_pisos, interes_anual, cap_mes_inmuebles, c
         plot4.plot(sim_renta_variable.meses, sim_inmuebles.capitales + sim_renta_variable.acumulados, label='invertido')
         plot4.fill_between(sim_renta_variable.meses, sim_inmuebles.capitales + sim_renta_variable.acumulados, label='invertido', alpha=0.75)
         plot4.set_title('Patrimonio (€) total por años')
+        plot4.set_xticks(years_starts)
+        plot4.set_xticklabels(years)
 
         plt.tight_layout()
         if save is not None:

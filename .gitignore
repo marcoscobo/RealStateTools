@@ -2,3 +2,4 @@
 .idea
 .fleet
 __pycache__
+*.png

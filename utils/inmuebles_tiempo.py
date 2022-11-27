@@ -35,6 +35,10 @@ class inmuebles:
         self.num_pisos_cum = None
         self.anios = None
         self.anios = None
+        self.fig = None
+        self.ax = None
+        self.fig2 = None
+        self.ax2 = None
 
     def calcular_meses(self):
         self.meses = []
@@ -72,37 +76,37 @@ class inmuebles:
         self.deudas[self.deudas < 0] = 0
 
     def representar_meses(self):
-        fig, ax = plt.subplots()
+        self.fig, self.ax = plt.subplots()
         x_labels = ['Piso ' + str(i) for i in range(1, len(self.meses) + 1)]
-        bars = ax.bar(x_labels, self.meses)
-        ax.set_title('Número de meses (años) necesarios por piso')
-        ax.bar_label(bars, label_type='edge', padding=3)
-        ax.bar_label(bars, self.anios, label_type='edge', padding=-16, color='white')
-        ax.bar_label(bars, ['({})'.format(i) for i in np.around(np.cumsum(self.anios), 1)], label_type='edge',
+        bars = self.ax.bar(x_labels, self.meses)
+        self.ax.set_title('Número de meses (años) necesarios por piso')
+        self.ax.bar_label(bars, label_type='edge', padding=3)
+        self.ax.bar_label(bars, self.anios, label_type='edge', padding=-16, color='white')
+        self.ax.bar_label(bars, ['({})'.format(i) for i in np.around(np.cumsum(self.anios), 1)], label_type='edge',
                      padding=-32, color='white')
-        ax.margins(y=0.1)
-        fig.tight_layout()
+        self.ax.margins(y=0.1)
+        self.fig.tight_layout()
         plt.show()
 
-    def representar_patrimonio(self):
-        fig, ax = plt.subplots()
+    def representar_patrimonio(self, ):
+        self.fig2, self.ax2 = plt.subplots()
         years = np.arange(0, self.anios_sim + 1 - self.anios_pasados, 5)
         years_starts = [y * 12 + self.meses_pasados for y in years]
-        line = ax.plot(range(self.meses_sim + 1)[self.meses_pasados:], self.valores[self.meses_pasados:],
+        line = self.ax2.plot(range(self.meses_sim + 1)[self.meses_pasados:], self.valores[self.meses_pasados:],
                        '--', label='valor')
-        line = ax.plot(range(self.meses_sim + 1)[self.meses_pasados:], self.deudas[self.meses_pasados:],
+        line = self.ax2.plot(range(self.meses_sim + 1)[self.meses_pasados:], self.deudas[self.meses_pasados:],
                        '--', label='deuda')
-        line = ax.plot(range(self.meses_sim + 1)[self.meses_pasados:], self.capitales[self.meses_pasados:],
+        line = self.ax2.plot(range(self.meses_sim + 1)[self.meses_pasados:], self.capitales[self.meses_pasados:],
                        '-', label='patrimonio')
-        ax.set_title('Patrimonio (€) por años')
-        ax.legend()
-        ax.set_xticks(years_starts)
-        ax.set_xticklabels(years)
-        ax.margins(y=0.1)
-        fig.tight_layout()
+        self.ax2.set_title('Patrimonio (€) por años')
+        self.ax2.legend()
+        self.ax2.set_xticks(years_starts)
+        self.ax2.set_xticklabels(years)
+        self.ax2.margins(y=0.1)
+        self.fig2.tight_layout()
         plt.show()
 
-    def simular(self, verbose=True, plot_meses=True, plot_patrimonio=True):
+    def simular(self, verbose=True, plot_meses=False, plot_patrimonio=False):
         self.calcular_meses()
         self.calcular_patrimonio()
         if verbose:
@@ -113,7 +117,3 @@ class inmuebles:
             self.representar_meses()
         if plot_patrimonio:
             self.representar_patrimonio()
-
-
-simulacion = inmuebles(cap_mes=500, num_pisos=5, anios_sim=30)
-simulacion.simular()

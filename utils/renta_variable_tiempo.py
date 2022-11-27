@@ -15,6 +15,8 @@ class renta_variable:
         self.acumulados = None
         self.invertido = None
         self.acumulado = None
+        self.fig = None
+        self.ax = None
 
     def calcular(self):
         self.meses = np.arange(1, self.meses_sim + 1)
@@ -28,27 +30,23 @@ class renta_variable:
         self.meses = [0] + list(self.meses)
 
     def representar(self):
-        fig, ax = plt.subplots()
+        self.fig, self.ax = plt.subplots()
         years = np.arange(0, self.anios_sim + 1, 5)
         years_starts = [y * 12 for y in years]
-        line = ax.plot(self.meses, self.invertidos, '--', label='invertido')
-        line = ax.plot(self.meses, self.acumulados, '-', label='acumulado', color='green')
-        ax.set_title('Patrimonio (€) por años')
-        ax.legend()
-        ax.set_xticks(years_starts)
-        ax.set_xticklabels(years)
-        ax.margins(y=0.1)
-        fig.tight_layout()
+        line = self.ax.plot(self.meses, self.invertidos, '--', label='invertido')
+        line = self.ax.plot(self.meses, self.acumulados, '-', label='acumulado', color='green')
+        self.ax.set_title('Patrimonio (€) por años')
+        self.ax.legend()
+        self.ax.set_xticks(years_starts)
+        self.ax.set_xticklabels(years)
+        self.ax.margins(y=0.1)
+        self.fig.tight_layout()
         plt.show()
 
-    def simular(self, verbose=True, plot=True):
+    def simular(self, verbose=True, plot=False):
         self.calcular()
         if verbose:
             print('Total invertido a los {} años: {}€'.format(self.anios_sim, int(self.invertido)))
             print('Total acumulado a los {} años: {}€'.format(self.anios_sim, round(self.acumulado)))
         if plot:
             self.representar()
-
-
-simulacion = renta_variable(cap_ini=0, cap_mes=500, anios_sim=30, interes_anual=0.05)
-simulacion.simular()
